@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== 全局基础样式 ==================== */
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-ink-950 text-fog-900 antialiased;
+    font-feature-settings: 'tnum'; /* 等宽数字，统计数字不跳动 */
+  }
+  ::selection {
+    @apply bg-brand-500/30 text-white;
+  }
+
+  /* 深色细滚动条 */
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    @apply bg-ink-600 rounded-full;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-700;
+  }
+
+  /* 表单控件统一深色基调（防止浏览器默认白色） */
+  input,
+  select,
+  textarea {
+    @apply bg-transparent;
+    color-scheme: dark;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+  }
+}
+
+/* ==================== 通用组合类 ==================== */
+@layer components {
+  /* 卡片容器 */
+  .fb-card {
+    @apply bg-ink-800/80 border border-ink-700/60 rounded-2xl shadow-card backdrop-blur-sm;
+  }
+  /* 主输入框 */
+  .fb-input {
+    @apply w-full h-10 px-3 rounded-xl bg-ink-900/80 border border-ink-600/70 text-fog-900
+      placeholder:text-fog-300 text-sm outline-none transition-all duration-200
+      focus:border-brand-500/70 focus:ring-2 focus:ring-brand-500/20;
+  }
+  /* 主按钮 */
+  .fb-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-5 rounded-xl text-sm font-medium
+      bg-gradient-to-r from-brand-500 to-brand-600 text-white
+      transition-all duration-200 hover:shadow-glow hover:brightness-110
+      active:scale-[.97] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  /* 次按钮 */
+  .fb-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-sm font-medium
+      bg-ink-700/50 border border-ink-600/60 text-fog-700
+      transition-all duration-200 hover:border-fog-300/40 hover:text-fog-900
+      active:scale-[.97] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  /* 危险按钮 */
+  .fb-btn-danger {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-sm font-medium
+      bg-rose-500/10 border border-rose-500/40 text-rose-400
+      transition-all duration-200 hover:bg-rose-500/20
+      active:scale-[.97] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  /* 表单标签 */
+  .fb-label {
+    @apply block mb-1.5 text-xs font-medium text-fog-500;
+  }
+}
+
+/* 页面切换过渡：由 GSAP 控制的初始态（无 JS 时内容仍可见） */
+.page-enter {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+/* AI 回答光标 */
+.ai-caret::after {
+  content: '▍';
+  @apply text-brand-400 animate-pulse-soft ml-0.5;
+}
+
+/* 骨架屏 shimmer */
+.fb-skeleton {
+  @apply rounded-xl bg-ink-700/50;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 400px 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* 尊重系统"减少动态效果"偏好（GSAP 侧另有 JS 判断） */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

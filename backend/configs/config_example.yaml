@@ -1,0 +1,52 @@
+# ===============================================
+# FriendBook AI 配置文件
+# 说明：生产环境请通过环境变量覆盖敏感项（如 MYSQL_PASSWORD / OPENAI_API_KEY）
+# ===============================================
+
+# 服务配置
+server:
+  port: 8080
+  mode: debug  # debug / release / test
+
+# MySQL 配置
+mysql:
+  host: mysql
+  port: 3306
+  username: root
+  password: ""
+  database: friendbook
+  charset: utf8mb4
+  max_idle_conns: 10
+  max_open_conns: 100
+  log_level: info  # silent / error / warn / info
+
+# Redis 配置
+redis:
+  host: redis
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 10
+
+# JWT 配置
+jwt:
+  secret: "friendbook-secret-key-change-in-production"
+  expire_hours: 24
+  issuer: "friendbook"
+
+# OpenAI 配置（AI 助手 / MCP 使用）
+openai:
+  api_key: "sk-xxx"
+  base_url: "https://api.openai.com/v1"
+  model: "gpt-4o-mini"
+
+# 限流配置
+rate_limit:
+  enabled: true
+  limit_per_minute: 60
+
+# 日志配置
+log:
+  level: info  # debug / info / warn / error
+  encoding: json  # json / console
+  output: stdout  # stdout / file（file 会写到 logs/app.log）

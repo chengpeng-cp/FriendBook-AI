@@ -1,0 +1,18 @@
+# ===== 敏感配置：真实密码/密钥（仓库只保留 config_example.yaml 模板）=====
+backend/configs/config.yaml
+
+# ===== 私有教学文档（docs/ 不开源）=====
+docs/*
+
+# ===== macOS =====
+.DS_Store
+
+# ===== Go 构建产物 =====
+backend/bin/
+backend/logs/
+*.test
+coverage.out
+
+# ===== 前端编译产物（vite.config.ts 才是源码）=====
+frontend/vite.config.js
+frontend/vite.config.d.ts
